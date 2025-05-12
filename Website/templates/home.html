@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FiriLinix.com</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca" />
+
+</head>
+
+<script>
+  // Fade-in when page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fade-in');
+  });
+
+  // Fade-out when clicking internal links
+  document.querySelectorAll('a').forEach(link => {
+    if (link.href && link.hostname === location.hostname) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        document.body.classList.remove('fade-in');
+        document.body.style.opacity = 0;
+        setTimeout(() => {
+          window.location.href = href;
+        }, 600); // Match transition duration
+      });
+    }
+  });
+</script>
+
+
+<body>
+
+  <header class="navbar">
+    <img class="logo" src="Website/firilinix.png" alt="Logo" />
+    <nav class="nav-links">
+      <a href="#info">Info</a>
+      <a href="#contacts">Contacts</a>
+      <a href="#dashboard">Dashboard</a>
+    </nav>
+  </header>
+
+<div class="blob-background">
+  <div class="blob pink"></div>
+  <div class="blob blue"></div>
+  <div class="blob purple"></div>
+</div>
+
+
+  <section class="hero">
+    <h1>FiriLinix</h1>
+    <p>FiriLinix is a new way of fitness with ingredients at home.</p>
+        <img class="logo2" src="Website/firilinix.png" alt="Logo" />
+  </section>
+  <section class="Info">
+    <h1>Who are us?</h1>
+    <p>We are focused on fitness, we know that some people has food at home and dont know what to do at dinner or lunch,
+      with Firilinix we can help you with that!</p>
+    <p>Our services allows you to help you making an fitness food with the ingredients you have in your refrigerator or
+      pantry.</p>
+
+  <script>
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    const main = document.getElementById('main-content');
+
+    // Esconde o loader após 1s
+    setTimeout(() => {
+      loader.style.display = 'none';
+      main.classList.remove('hidden');
+      main.classList.add('fade-in');
+    }, 1000); // tempo do loader (1 segundo)
+  });
+</script>
+
+
+</body>
+
+</html>

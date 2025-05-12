@@ -1,0 +1,180 @@
+/* Esconde o conteúdo principal no início */
+#main-content.hidden {
+  display: none;
+}
+
+/* Loader centralizado na tela */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Animação fadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#main-content.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+
+body {
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-basis: 0;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  font-family: lexend deca;
+  color: black;
+  background-color: aliceblue;
+  --mdc-theme-primary: lightblue;
+  --mdc-theme-on-primary: white;
+}
+h2 {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+main {
+  margin-right: 1300px;
+  margin: top 0px;
+  border-bottom: 80px;
+  border-color: black;
+}
+
+body {
+  font-family: Poppins, sans-serif;
+  background-color: #111;
+  color: white;
+  margin: 0;
+}
+
+.navbar {
+  background-color: #222;
+  padding: 12px 18px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #111; /* Cor escura de fundo */
+  padding: 20px 40px;
+  position: fixed;
+  top: 0;
+  width: 60%;
+  z-index: 1000;
+}
+
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 30px;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #aea8ff; /* cor ao passar o mouse */
+}
+
+.hero {
+  padding: 80px 20px; /* espaço interno */
+  margin-bottom: 40px; /* espaço externo abaixo */
+  text-align: center;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.logo2 {
+    width: 170px;
+    height: auto;
+}
+
+.blob-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  animation: float 30s ease-in-out infinite alternate;
+}
+
+/* Individual blobs */
+.blob.pink {
+  width: 40vw;
+  height: 40vw;
+  background: #ff6ec7;
+  top: -10%;
+  left: -10%;
+}
+
+.blob.blue {
+  width: 35vw;
+  height: 35vw;
+  background: #6ec7ff;
+  bottom: -15%;
+  right: -10%;
+}
+
+.blob.purple {
+  width: 30vw;
+  height: 30vw;
+  background: #c86eff;
+  top: 50%;
+  left: 30%;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(10px, -20px) scale(1.05);
+  }
+  100% {
+    transform: translate(-10px, 20px) scale(1);
+  }
+}
+
+/* Base fade transition */
+body {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* On load, fade in */
+body.fade-in {
+  opacity: 1;
+}
