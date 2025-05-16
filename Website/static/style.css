@@ -1,89 +1,42 @@
-/* Esconde o conteúdo principal no início */
-#main-content.hidden {
-  display: none;
-}
-
-/* Loader centralizado na tela */
-#loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #111;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-/* Animação fadeIn */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-#main-content.fade-in {
-  animation: fadeIn 1s ease forwards;
-}
-
-
+/* ========================= */
+/* GERAIS                   */
+/* ========================= */
 body {
-  position: relative;
+  font-family: poppins;
+  background-color: #111;
+  color: white;
+  margin: 0;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-basis: 0;
-  gap: 1rem;
   align-items: center;
   text-align: center;
-  font-family: lexend deca;
-  color: black;
-  background-color: aliceblue;
-  --mdc-theme-primary: lightblue;
-  --mdc-theme-on-primary: white;
-}
-h2 {
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
+  transition: opacity 0.6s ease-in-out;
+  opacity: 0; /* Fade base */
 }
 
-main {
-  margin-right: 1300px;
-  margin: top 0px;
-  border-bottom: 80px;
-  border-color: black;
+/* Fade in na entrada */
+body.fade-in {
+  opacity: 1;
 }
 
-body {
-  font-family: Poppins, sans-serif;
-  background-color: #111;
-  color: white;
-  margin: 0;
-}
-
+/* ========================= */
+/* HEADER E NAVBAR           */
+/* ========================= */
 .navbar {
-  background-color: #222;
-  padding: 12px 18px;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  background-color: #111;
+  padding: 15px 30px;
   border-radius: 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #111; /* Cor escura de fundo */
-  padding: 20px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   z-index: 1000;
 }
-
 
 .nav-links a {
   color: white;
@@ -94,25 +47,57 @@ body {
 }
 
 .nav-links a:hover {
-  color: #aea8ff; /* cor ao passar o mouse */
+  color: #aea8ff;
 }
 
-.hero {
-  padding: 80px 20px; /* espaço interno */
-  margin-bottom: 40px; /* espaço externo abaixo */
-  text-align: center;
+.navbar2 {
+  background-color: #111;
+  height: 67px;
+  padding: 0 25px;
+  border-radius: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
+.nav-links2 a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.nav-links2 a:hover {
+  color: #aea8ff;
+}
+
+/* ========================= */
+/* LOGOS E HERO SECTION     */
+/* ========================= */
 .logo {
-  width: 50px;
+  width: 37px;
   height: auto;
 }
 
 .logo2 {
-    width: 170px;
-    height: auto;
+  width: 170px;
+  height: auto;
 }
 
+.hero {
+  padding: 80px 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* ========================= */
+/* BLOB BACKGROUND          */
+/* ========================= */
 .blob-background {
   position: fixed;
   top: 0;
@@ -128,53 +113,128 @@ body {
   border-radius: 50%;
   filter: blur(100px);
   opacity: 0.6;
-  animation: float 30s ease-in-out infinite alternate;
 }
 
-/* Individual blobs */
 .blob.pink {
   width: 40vw;
   height: 40vw;
   background: #ff6ec7;
-  top: -10%;
-  left: -10%;
+  top: 10%;
+  left: 5%;
+  animation: floatPink 20s ease-in-out infinite alternate;
 }
 
 .blob.blue {
   width: 35vw;
   height: 35vw;
   background: #6ec7ff;
-  bottom: -15%;
-  right: -10%;
+  bottom: 5%;
+  right: 15%;
+  animation: floatBlue 22s ease-in-out infinite alternate;
 }
 
 .blob.purple {
   width: 30vw;
   height: 30vw;
   background: #c86eff;
-  top: 50%;
-  left: 30%;
+  top: 60%;
+  left: 50%;
+  animation: floatPurple 21s ease-in-out infinite alternate;
 }
 
-@keyframes float {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(10px, -20px) scale(1.05);
-  }
-  100% {
-    transform: translate(-10px, 20px) scale(1);
-  }
+
+
+@keyframes floatPink {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(150px, -200px) scale(1.1); }
+  50%  { transform: translate(-250px, 100px) scale(0.95); }
+  75%  { transform: translate(100px, 200px) scale(1.05); }
+  100% { transform: translate(-200px, -150px) scale(1); }
 }
 
-/* Base fade transition */
-body {
+@keyframes floatBlue {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(-200px, 150px) scale(1.1); }
+  50%  { transform: translate(300px, -80px) scale(0.9); }
+  75%  { transform: translate(-150px, -200px) scale(1.05); }
+  100% { transform: translate(250px, 120px) scale(1); }
+}
+
+@keyframes floatPurple {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(120px, -180px) scale(1.05); }
+  50%  { transform: translate(-180px, 140px) scale(1); }
+  75%  { transform: translate(220px, -120px) scale(0.9); }
+  100% { transform: translate(-160px, 180px) scale(1.1); }
+}
+
+
+/* ========================= */
+/* LOADER                   */
+/* ========================= */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Esconde conteúdo até o loader sumir */
+#main-content.hidden {
+  display: none;
+}
+
+/* Fade animation ao mostrar main */
+#main-content.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+/* ========================= */
+/* PÁGINAS DINÂMICAS        */
+/* ========================= */
+#container {
+  position: relative;
+  overflow: hidden;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transition: opacity 0.6s ease-in-out;
+  transition: opacity 0.5s ease;
 }
 
-/* On load, fade in */
-body.fade-in {
+.page.active {
   opacity: 1;
+}
+
+/* ========================= */
+/* ANIMAÇÕES                */
+/* ========================= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.6s forwards;
 }

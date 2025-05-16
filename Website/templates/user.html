@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FiriLinix Login/Register</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      html.fade-in {
+        opacity: 1;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .container {
+        background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(255, 110, 199, 0.3);
+        width: 360px;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+      }
+
+      h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        font-family: "Poppins", sans-serif;
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      input {
+        border: 1px solid #444;
+        background-color: #1a1a1a;
+        color: white;
+      }
+
+      input::placeholder {
+        color: #888;
+      }
+
+      button {
+        background: #ff6ec7;
+        color: white;
+        border: none;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: #e055b5;
+      }
+
+      .toggle {
+        text-align: center;
+        margin-top: 15px;
+        cursor: pointer;
+        color: #aea8ff;
+        font-size: 14px;
+      }
+
+      .form-section {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .form-section.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .blob-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.6;
+      }
+
+      .blob.pink {
+        width: 40vw;
+        height: 40vw;
+        background: #ff6ec7;
+        top: 10%;
+        left: 5%;
+        animation: floatPink 20s ease-in-out infinite alternate;
+      }
+
+      .blob.blue {
+        width: 35vw;
+        height: 35vw;
+        background: #6ec7ff;
+        bottom: 5%;
+        right: 15%;
+        animation: floatBlue 22s ease-in-out infinite alternate;
+      }
+
+      .blob.purple {
+        width: 30vw;
+        height: 30vw;
+        background: #c86eff;
+        top: 60%;
+        left: 50%;
+        animation: floatPurple 21s ease-in-out infinite alternate;
+      }
+
+      @keyframes floatPink {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(150px, -200px) scale(1.1);
+        }
+        50% {
+          transform: translate(-250px, 100px) scale(0.95);
+        }
+        75% {
+          transform: translate(100px, 200px) scale(1.05);
+        }
+        100% {
+          transform: translate(-200px, -150px) scale(1);
+        }
+      }
+
+      @keyframes floatBlue {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(-200px, 150px) scale(1.1);
+        }
+        50% {
+          transform: translate(300px, -80px) scale(0.9);
+        }
+        75% {
+          transform: translate(-150px, -200px) scale(1.05);
+        }
+        100% {
+          transform: translate(250px, 120px) scale(1);
+        }
+      }
+
+      @keyframes floatPurple {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(120px, -180px) scale(1.05);
+        }
+        50% {
+          transform: translate(-180px, 140px) scale(1);
+        }
+        75% {
+          transform: translate(220px, -120px) scale(0.9);
+        }
+        100% {
+          transform: translate(-160px, 180px) scale(1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blob-background">
+      <div class="blob pink"></div>
+      <div class="blob blue"></div>
+      <div class="blob purple"></div>
+    </div>
+
+    <div class="container">
+      <div class="form-section active" id="loginForm">
+        <h2>Login</h2>
+        <form method="POST" action="/login">
+          <input name="email" type="email" placeholder="Email" required />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+        <div class="toggle" onclick="toggleForm()">Create new account</div>
+      </div>
+
+      <div class="form-section" id="registerForm">
+        <h2>Register</h2>
+        <form method="POST" action="/register">
+          <input name="name" type="text" placeholder="Name" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+        <div class="toggle" onclick="toggleForm()">Have an account? Join</div>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        document.documentElement.classList.add("fade-in");
+      });
+
+      function toggleForm() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        loginForm.classList.remove("active");
+        registerForm.classList.remove("active");
+
+        setTimeout(() => {
+          if (loginForm.style.display !== "none") {
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+            setTimeout(() => registerForm.classList.add("active"), 10);
+          } else {
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
+            setTimeout(() => loginForm.classList.add("active"), 10);
+          }
+        }, 300);
+      }
+    </script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        document.documentElement.classList.add("fade-in");
+
+        // Função para ler parâmetros GET da URL
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(param);
+        }
+
+        if (getQueryParam("success") === "true") {
+          alert("Registro realizado com sucesso! Agora faça login.");
+          // Se quiser, você pode limpar o parâmetro da URL para não mostrar mais o alert no refresh
+          history.replaceState(null, "", window.location.pathname);
+        }
+      });
+
+      function toggleForm() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        loginForm.classList.remove("active");
+        registerForm.classList.remove("active");
+
+        setTimeout(() => {
+          if (loginForm.style.display !== "none") {
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+            setTimeout(() => registerForm.classList.add("active"), 10);
+          } else {
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
+            setTimeout(() => loginForm.classList.add("active"), 10);
+          }
+        }, 300);
+      }
+    </script>
+  </body>
+</html>

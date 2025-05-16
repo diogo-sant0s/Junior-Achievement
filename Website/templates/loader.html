@@ -43,8 +43,12 @@
       }
 
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       .percentage {
@@ -67,7 +71,7 @@
       }
 
       .transition-line.expand {
-        width: 60vw;
+        width: 40vw;
         opacity: 1;
       }
 
@@ -80,7 +84,7 @@
       .welcome-text {
         font-size: 26px;
         opacity: 0;
-        font-family: "Poppins";
+        font-family: "Poppins", sans-serif;
         position: absolute;
         top: calc(50% - 30px);
         left: 50%;
@@ -88,16 +92,27 @@
         white-space: nowrap;
         overflow: hidden;
         border-right: 2px solid white;
-        width: 0;
+        width: 0ch; /* <- importante */
       }
 
       .welcome-text.typing {
-        animation: typing 3s steps(30, end) forwards; /* Slow down typing animation */
+        opacity: 1;
+        width: 21ch; /* <- número exato de caracteres: "Welcome to Firilinix!" */
+        animation: typing 3s steps(21, end) forwards;
+      }
+
+      .welcome-text.hide {
+        opacity: 0;
+        transition: opacity 1s ease;
       }
 
       @keyframes typing {
-        from { width: 0; opacity: 1; }
-        to { width: 100%; opacity: 1; }
+        from {
+          width: 0ch;
+        }
+        to {
+          width: 15.5ch;
+        }
       }
 
       .logo {
@@ -105,7 +120,7 @@
         transition: opacity 1.5s ease, transform 1.5s ease; /* Slow down logo fade-in */
         transform: scale(0.9);
         position: absolute;
-        top: 60%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0.9);
       }
@@ -145,7 +160,23 @@
 
           setTimeout(() => {
             welcomeText.classList.add("typing");
-          }, 600);
+            setTimeout(() => {
+              welcomeText.classList.add("typing");
+            }, 400);
+
+            setTimeout(() => {
+              line.classList.remove("expand");
+              line.classList.add("contract");
+            }, 3500);
+
+            setTimeout(() => {
+              welcomeText.classList.add("hide"); // Oculta o texto
+            }, 3700); // Um pouco antes do logo aparecer
+
+            setTimeout(() => {
+              logo.classList.add("show");
+            }, 4200);
+          }, 400);
 
           setTimeout(() => {
             line.classList.remove("expand");
