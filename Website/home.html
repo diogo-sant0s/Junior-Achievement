@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FiriLinix.com</title>
+    <link rel="icon" type="image/png" href="static/firilinix.png" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lexend+Deca"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+    <style>
+      body {
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      body.fade-in {
+        opacity: 1;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000, // duração das animações
+        once: true // anima uma única vez ao aparecer
+      });
+    </script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <img class="logo" src="static/firilinix.png" alt="Logo" />
+      <nav class="nav-links">
+        <a href="#info">Info</a>
+        <a href="#contacts">Contacts</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+    </header>
+
+    <header class="navbar2">
+      <nav class="nav-links2">
+        <a href="user">Login</a>
+      </nav>
+    </header>
+
+    <div class="blob-background">
+      <div class="blob pink"></div>
+      <div class="blob blue"></div>
+      <div class="blob purple"></div>
+    </div>
+
+    <section class="hero">
+      <h1 data-aos>FiriLinix</h1>
+      <p data-aos>FiriLinix é uma nova forma de fitness com ingredientes em casa.</p>
+      <img class="logo2" src="static/firilinix.png" alt="Logo" />
+    </section>
+
+    <section><hr class="hr3" /></section>
+
+    <section id="info" class="Info">
+      <hr class="hr3" />
+      <h1 data-aos>Quem nós somos?</h1>
+      <h8 data-aos>
+        Nos somos focados em fitness e saúde, o nosso objetivo é ajudar você a
+        ter uma alimentação saudável e balanceada.
+      </h8>
+      <p data-aos>
+        Os nossos serviçõs são focados em ajudar lhe a prevenir doenças,
+        principalmente obesidade, diabetes e cardio-vascular.
+      </p>
+    </section>
+
+    <!-- Seção Contacts criada só para ter o id, você pode adicionar conteúdo aqui -->
+    <section id="contacts" class="Contacts">
+      <hr class="hr3" />
+      <h1 data-aos>Contacts</h1>
+      <p data-aos>Coloque aqui suas informações de contato.</p>
+    </section>
+
+    <section id="reviews" class="Review">
+      <hr class="hr3" />
+      <h1 data-aos>Avaliações</h1>
+
+      <div class="card-container">
+        <div class="card">
+          <h3 data-aos>Hugo</h3>
+          <p data-aos>Com o FiriLinix consegui melhorar a minha saude!</p>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <div class="card highlight">
+          <h3 data-aos>Marco</h3>
+          <p data-aos>
+            Desde que comecei a usar o firilinix, não desperdiço mais alimentos!
+          </p>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <div class="card">
+          <h3 data-aos>Diogo</h3>
+          <p data-aos>FiriLinix ajudou me a cuidar da minha saude.</p>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+          <hr class="hr3" />
+
+      <footer class="footer-navbar">
+  <nav class="footer-links">
+    <p>Nossos parceiros</p>
+    <a href="https://www.microsoft.com/pt-pt/" target="_blank">
+  <img src="static/microsoft.png" alt="microsoft" style="height: 50px;" />
+</a>
+    <a href="https://www.fablab.fabricadoempreendedor.pt/" target="_blank">
+  <img src="static/fablabsintra.png" alt="fablab sintra" style="height: 50px;" />
+</a>
+    <a href="https://www.uf-massamamabraao.pt/" target="_blank">
+  <img src="static/juntadefreguesia.png" alt="junta de freguesia massama/monte abrãao" style="height: 50px;" />
+</a>
+  </nav>
+</footer>
+
+    </section>
+
+    <script>
+      // Aplica fade-in ao carregar a página
+      window.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("fade-in");
+      });
+
+      // Aplica fade-out ao clicar em links internos
+      document.querySelectorAll("a").forEach((link) => {
+  if (link.hostname === window.location.hostname && link.getAttribute("href")) {
+    const href = link.getAttribute("href");
+
+    // Só aplicar fade-out para links que não são âncoras internas (não começam com #)
+    if (!href.startsWith("#")) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        document.body.classList.remove("fade-in");
+        document.body.style.opacity = 0;
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 600); // tempo igual ao CSS
+      });
+    }
+  }
+});
+    </script>
+  </body>
+</html>
