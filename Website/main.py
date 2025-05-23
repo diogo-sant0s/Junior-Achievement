@@ -1,5 +1,9 @@
 from flask import Flask
+from flask_session import Session
 app = Flask(__name__)
+app.secret_key = 'chave-secreta-supersegura'  # Use algo mais seguro em produção
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 from views import *
 

@@ -76,6 +76,62 @@ body.fade-in {
   color: #aea8ff;
 }
 
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: poppins, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.card-container {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  background-color: #1a1a1a;
+  padding: 60px;
+  width: 200px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: border 0.3s ease;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgb(255, 0, 0); /* efeito suave de luz */
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.card p {
+  color: #ccc;
+  margin: 0;
+}
+
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  margin-top: 15px; /* espaço entre o texto e as estrelas */
+}
+
+.review h1 {
+  margin-bottom: 10px;
+}
+
 /* ========================= */
 /* LOGOS E HERO SECTION     */
 /* ========================= */
@@ -85,14 +141,28 @@ body.fade-in {
 }
 
 .logo2 {
-  width: 170px;
+  width: 285px;
   height: auto;
 }
 
+.hr3 {
+  margin: 55px;
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, #ccc, transparent);
+}
+
 .hero {
-  padding: 80px 20px;
-  margin-bottom: 40px;
+  margin-top: 1200px;
   text-align: center;
+}
+
+.Info {
+  line-height: 24px;
+}
+
+.Review {
+  line-height: 24px;
 }
 
 /* ========================= */
@@ -102,10 +172,10 @@ body.fade-in {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* manda para trás */
   overflow: hidden;
-  z-index: -1;
 }
 
 .blob {
@@ -142,32 +212,59 @@ body.fade-in {
   animation: floatPurple 21s ease-in-out infinite alternate;
 }
 
-
-
 @keyframes floatPink {
-  0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(150px, -200px) scale(1.1); }
-  50%  { transform: translate(-250px, 100px) scale(0.95); }
-  75%  { transform: translate(100px, 200px) scale(1.05); }
-  100% { transform: translate(-200px, -150px) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(150px, -200px) scale(1.1);
+  }
+  50% {
+    transform: translate(-250px, 100px) scale(0.95);
+  }
+  75% {
+    transform: translate(100px, 200px) scale(1.05);
+  }
+  100% {
+    transform: translate(-200px, -150px) scale(1);
+  }
 }
 
 @keyframes floatBlue {
-  0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(-200px, 150px) scale(1.1); }
-  50%  { transform: translate(300px, -80px) scale(0.9); }
-  75%  { transform: translate(-150px, -200px) scale(1.05); }
-  100% { transform: translate(250px, 120px) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-200px, 150px) scale(1.1);
+  }
+  50% {
+    transform: translate(300px, -80px) scale(0.9);
+  }
+  75% {
+    transform: translate(-150px, -200px) scale(1.05);
+  }
+  100% {
+    transform: translate(250px, 120px) scale(1);
+  }
 }
 
 @keyframes floatPurple {
-  0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(120px, -180px) scale(1.05); }
-  50%  { transform: translate(-180px, 140px) scale(1); }
-  75%  { transform: translate(220px, -120px) scale(0.9); }
-  100% { transform: translate(-160px, 180px) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(120px, -180px) scale(1.05);
+  }
+  50% {
+    transform: translate(-180px, 140px) scale(1);
+  }
+  75% {
+    transform: translate(220px, -120px) scale(0.9);
+  }
+  100% {
+    transform: translate(-160px, 180px) scale(1.1);
+  }
 }
-
 
 /* ========================= */
 /* LOADER                   */
@@ -222,13 +319,21 @@ body.fade-in {
 /* ANIMAÇÕES                */
 /* ========================= */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .fade-in {
@@ -238,3 +343,32 @@ body.fade-in {
 .fade-out {
   animation: fadeOut 0.6s forwards;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+ .footer-navbar {
+        background-color: #1c1c1c;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        width: 96%;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 1);
+        font-family: 'Lexend Deca', sans-serif;
+      }
+
+      .footer-links a {
+        color: #ffffff;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer-links a:hover {
+        color: #00adb5;
+        text-decoration: underline;
+      }

@@ -194,8 +194,50 @@
           transform: translate(-160px, 180px) scale(1.1);
         }
       }
+
+      .error-popup {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ff4f81;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 0 15px rgba(255, 79, 129, 0.4);
+        display: none;
+        z-index: 9999;
+        animation: fadeInOut 4s ease-in-out forwards;
+      }
+
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-20px);
+        }
+        10%,
+        90% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-20px);
+        }
+      }
+
+      /* popup verde, já alterável por JavaScript */
+      .success-popup {
+        background: #4caf50;
+      }
     </style>
   </head>
+
+  <div id="errorPopup" class="error-popup">
+    <span id="errorMessage"></span>
+  </div>
+
   <body>
     <div class="blob-background">
       <div class="blob pink"></div>
@@ -216,12 +258,12 @@
           />
           <button type="submit">Login</button>
         </form>
-        <div class="toggle" onclick="toggleForm()">Create new account</div>
+        <div class="toggle" onclick="toggleForm()">Crie uma conta</div>
       </div>
 
       <div class="form-section" id="registerForm">
         <h2>Register</h2>
-        <form method="POST" action="/register">
+        <form method="POST" action="/user">
           <input name="name" type="text" placeholder="Name" required />
           <input name="email" type="email" placeholder="Email" required />
           <input
@@ -232,7 +274,7 @@
           />
           <button type="submit">Register</button>
         </form>
-        <div class="toggle" onclick="toggleForm()">Have an account? Join</div>
+        <div class="toggle" onclick="toggleForm()">Já tem uma conta? Entre</div>
       </div>
     </div>
 
@@ -297,6 +339,93 @@
             setTimeout(() => loginForm.classList.add("active"), 10);
           }
         }, 300);
+      }
+    </script>
+
+    <script>
+window.addEventListener("DOMContentLoaded", () => {
+  document.documentElement.classList.add("fade-in");
+
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Se registro foi bem-sucedido, mostra popup verde e ativa login
+  if (getQueryParam("registered") === "true") {
+    const popup = document.getElementById("errorPopup");
+    const msgSpan = document.getElementById("errorMessage");
+
+    msgSpan.textContent = "Account created!";
+    popup.style.background = "#4CAF50"; // verde
+    popup.style.display = "block";
+
+    // Troca para o formulário de login
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
+    loginForm.classList.add("active");
+
+    setTimeout(() => {
+      history.replaceState(null, "", window.location.pathname);
+    }, 4000);
+  }
+
+  // Erro de email já em uso
+  const errorMessage = getQueryParam("error");
+  if (errorMessage) {
+    const popup = document.getElementById("errorPopup");
+    const msgSpan = document.getElementById("errorMessage");
+    msgSpan.textContent = decodeURIComponent(errorMessage);
+    popup.style.display = "block";
+
+    setTimeout(() => {
+      history.replaceState(null, "", window.location.pathname);
+    }, 4000);
+  }
+});
+
+
+      function toggleForm() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        loginForm.classList.remove("active");
+        registerForm.classList.remove("active");
+
+        setTimeout(() => {
+          if (loginForm.style.display !== "none") {
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+            setTimeout(() => registerForm.classList.add("active"), 10);
+          } else {
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
+            setTimeout(() => loginForm.classList.add("active"), 10);
+          }
+        }, 300);
+      }
+
+      // Exibe popup de sucesso se o registro foi feito
+      if (getQueryParam("registered") === "true") {
+        const popup = document.getElementById("errorPopup");
+        const msgSpan = document.getElementById("errorMessage");
+
+        msgSpan.textContent = "Account created!";
+        popup.style.background = "#4CAF50"; // verde
+        popup.style.display = "block";
+
+        // Mostra o formulário de login
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+        loginForm.classList.add("active");
+
+        setTimeout(() => {
+          history.replaceState(null, "", window.location.pathname);
+        }, 4000);
       }
     </script>
   </body>
