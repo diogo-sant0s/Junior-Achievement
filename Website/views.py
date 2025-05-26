@@ -1,9 +1,11 @@
 import re
-from flask import render_template, request, redirect, url_for, session as flask_session
+from flask import render_template, request, redirect, url_for, jsonify, session as flask_session
 from main import app
+import sqlite3
 from database import session as db_session, User
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+import psycopg2
 
 # ========== DECORADOR DE PROTEÇÃO ==========
 def login_required(f):
@@ -18,8 +20,7 @@ def login_required(f):
 def is_strong_password(password):
     if len(password) < 8:
         return False
-    
-    # Precisa ter pelo menos um: letra maiúscula, número ou símbolo
+
     has_upper = re.search(r'[A-Z]', password)
     has_digit = re.search(r'\d', password)
     has_symbol = re.search(r'[@$!%*?&]', password)
@@ -92,7 +93,7 @@ def login():
     user = db_session.query(User).filter_by(email=email).first()
 
     if user and check_password_hash(user.password, password):
-        flask_session['user_id'] = user.id  # SALVAR LOGIN NA SESSÃO
+        flask_session['user_id'] = user.id
         return redirect(url_for('dashpage') + '?login=success')
     else:
         return redirect(url_for('register') + '?error=Credenciais inválidas.')
@@ -104,34 +105,93 @@ def logout():
     return redirect(url_for('register') + '?logout=success')
 
 # ========== ATUALIZAÇÃO DE CREDENCIAIS ==========
-# ========== ATUALIZAÇÃO DE CREDENCIAIS ==========  
-@app.route('/update_credentials', methods=['GET', 'POST'])
+@app.route('/update_credentials', methods=['POST'])
 @login_required
 def update_credentials():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-        user_id = flask_session.get('user_id')
-        user = db_session.query(User).filter_by(id=user_id).first()
+    user_id = flask_session.get('user_id')
+    user = db_session.query(User).filter_by(id=user_id).first()
 
-        if user:
-            if email and user.email != email:
-                existing_user = db_session.query(User).filter_by(email=email).first()
-                if existing_user:
-                    return redirect(url_for('dashpage') + '?error=Email já em uso.')
-                user.old_email = user.email
-                user.email = email
+    if user:
+        if email and user.email != email:
+            existing_user = db_session.query(User).filter_by(email=email).first()
+            if existing_user:
+                return redirect(url_for('dashpage') + '?error=Email já em uso.')
+            user.email = email
 
-            if password:
-                if not is_strong_password(password):
-                    return redirect(url_for('dashpage') + '?error=Senha fraca. Use 8+ caracteres com maiúsculas, números ou símbolos.')
-                user.password = generate_password_hash(password)
+        if password:
+            if not is_strong_password(password):
+                return redirect(url_for('dashpage') + '?error=Senha fraca. Use 8+ caracteres com maiúsculas, números ou símbolos.')
+            user.password = generate_password_hash(password)
 
-            db_session.commit()
-            return redirect(url_for('dashpage') + '?updated=true')
-        else:
-            return redirect(url_for('dashpage') + '?error=user_not_found')
+        db_session.commit()
+        return redirect(url_for('dashpage') + '?updated=true')
     else:
-        # Se a rota for acessada via GET, redireciona para o perfil
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('dashpage') + '?error=user_not_found')
+
+# ========== ATUALIZAÇÃO DE DADOS FÍSICOS ==========
+@app.route('/update_physical_data', methods=['POST'])
+@login_required
+def update_physical_data():
+    weight = request.form.get('weight')
+    height = request.form.get('height')
+
+    user_id = flask_session.get('user_id')
+    user = db_session.query(User).filter_by(id=user_id).first()
+
+    if not user:
+        return redirect(url_for('profilepage') + '?error=user_not_found')
+
+    try:
+        if weight:
+            user.weight = float(weight)
+        if height:
+            user.height = float(height)
+
+        db_session.commit()
+        return redirect(url_for('profilepage') + '?updated=true')
+    except Exception as e:
+        db_session.rollback()
+        return redirect(url_for('profilepage') + f'?error=Erro ao atualizar: {str(e)}')
+
+DB_FILE = "redeem_keys.db"
+
+@app.route("/activate-key", methods=["POST"])
+def activate_key():
+    data = request.get_json()
+    key = data.get("key", "").strip().upper()
+
+    if not key:
+        return jsonify({"message": "Chave inválida."}), 400
+
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, type, is_redeemed FROM keys WHERE key = ?", (key,))
+    result = cursor.fetchone()
+
+    if not result:
+        conn.close()
+        return jsonify({"message": "Chave não encontrada."}), 404
+
+    key_id, key_type, is_redeemed = result
+
+    if is_redeemed:
+        conn.close()
+        return jsonify({"message": "Esta chave já foi utilizada."}), 400
+
+    cursor.execute(
+        "UPDATE keys SET is_redeemed = 1 WHERE id = ?",
+        (key_id,)
+    )
+    conn.commit()
+    conn.close()
+
+    if key_type == "monthly":
+        return jsonify({"message": "Plano mensal ativado com sucesso!"})
+    elif key_type == "yearly":
+        return jsonify({"message": "Plano anual ativado com sucesso!"})
+    else:
+        return jsonify({"message": "Tipo de chave desconhecido."}), 500
